@@ -2,6 +2,7 @@
 using AutoMapper;
 using HomeApi.Contracts.Models.Rooms;
 using HomeApi.Data.Models;
+using HomeApi.Data.Queries;
 using HomeApi.Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,6 +24,22 @@ namespace HomeApi.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Изменение комнаты
+        /// </summary>
+        [HttpPut]
+        [Route("Update")]
+        public async Task<IActionResult> UpdateRoom([FromBody] UpdateRoomRequest request )
+        {
+            var room = _repository.GetRoomByName(request.Name).Result;
+            var newRoom = _mapper.Map<UpdateRoomRequest,UpdateRoomQuery>(request);
+            await _repository.UpdateRoom(room, newRoom);
+            return StatusCode(200, "Комната была изменена");
+        }
+
+        /// <summary>
+        /// Вывести все комнаты
+        /// </summary>
         [HttpGet]
         [Route("")]
         public async Task<IActionResult> GetRooms()
@@ -35,7 +52,7 @@ namespace HomeApi.Controllers
             };
             return StatusCode(200,ViewRooms);
         }
-        
+
         /// <summary>
         /// Добавление комнаты
         /// </summary>

@@ -4,6 +4,7 @@ using HomeApi.Contracts.Models.Devices;
 using HomeApi.Contracts.Models.Home;
 using HomeApi.Contracts.Models.Rooms;
 using HomeApi.Data.Models;
+using HomeApi.Data.Queries;
 
 namespace HomeApi
 {
@@ -29,6 +30,9 @@ namespace HomeApi
             CreateMap<AddRoomRequest, Room>();
             CreateMap<Device, DeviceView>();
             CreateMap<Room, RoomView>();
+            CreateMap<UpdateRoomRequest, UpdateRoomQuery>()
+                .ForMember(d => d.Name,
+                opt => opt.MapFrom(r => r.NewName));
         }
     }
 }
