@@ -32,6 +32,10 @@ namespace HomeApi.Controllers
         public async Task<IActionResult> UpdateRoom([FromBody] UpdateRoomRequest request )
         {
             var room = _repository.GetRoomByName(request.Name).Result;
+            if (room is null) 
+            {
+                return StatusCode(400, "Такой комнаты нет!");
+            }
             var newRoom = _mapper.Map<UpdateRoomRequest,UpdateRoomQuery>(request);
             await _repository.UpdateRoom(room, newRoom);
             return StatusCode(200, "Комната была изменена");

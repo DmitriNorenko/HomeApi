@@ -35,6 +35,8 @@ namespace HomeApi.Data.Repos
             {
                 room.Area = newRoom.Area;
             }
+            room.GasConnected = newRoom.GasConnected;
+
             var entry = _context.Entry(room);
             if (entry.State == EntityState.Detached)
             {
