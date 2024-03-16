@@ -20,6 +20,12 @@ namespace HomeApi.Data.Repos
         /// <summary>
         ///  Найти комнату по имени
         /// </summary>
+        /// 
+        public async Task<Room[]> GetAllRooms()
+        {
+           return await _context.Rooms.ToArrayAsync();
+        }
+
         public async Task<Room> GetRoomByName(string name)
         {
             return await _context.Rooms.Where(r => r.Name == name).FirstOrDefaultAsync();
